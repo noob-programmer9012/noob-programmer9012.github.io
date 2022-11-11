@@ -56,6 +56,10 @@
   .main .view {
     width: 100%;
   }
+  .main .view .table {
+    border: 1px solid rgba(88, 88, 88, 0.911);
+    box-shadow: 10px 10px 10px 1px rgba(128, 128, 128, 0.753);
+  }
   .main .control {
     width: 100%;
     margin-bottom: 3em;
