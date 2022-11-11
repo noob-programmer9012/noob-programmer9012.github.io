@@ -23,16 +23,18 @@ let tr
 let td0
 let td1
 let td2
+let td3
 let counter
 let key
 let value
+let edit
+let deleteData
 
 save.addEventListener('click', e => {
   e.preventDefault()
-  if (trans.value !== '' && gst.value != '') {
+  if (trans.value !== '' && gst.value != '' && save.id === 'save') {
     let length = localStorage.length
-
-    let counter = document.createTextNode(String(length + 1))
+    let counter = document.createTextNode(length + 1)
     let key = document.createTextNode(trans.value)
     let value = document.createTextNode(gst.value)
 
@@ -40,7 +42,22 @@ save.addEventListener('click', e => {
     td0 = document.createElement('th')
     td1 = document.createElement('td')
     td2 = document.createElement('td')
+    td3 = document.createElement('td')
+    edit = document.createElement('button')
+    edit.innerHTML = 'Edit'
+    edit.setAttribute('class', 'edit')
+    edit.setAttribute('id', 'edit')
+    edit.setAttribute('value', `${i}`)
+    deleteData = document.createElement('button')
+    deleteData.innerHTML = 'Delete'
+    deleteData.setAttribute('class', 'deleteData')
+    deleteData.setAttribute('id', 'deleteData')
+    deleteData.setAttribute('value', `${i}`)
+    deleteData.setAttribute('data-bs-toggle', 'modal')
+    deleteData.setAttribute('data-bs-target', '#exampleModal')
 
+    td3.appendChild(edit)
+    td3.appendChild(deleteData)
     td0.setAttribute('scope', 'row')
     td0.appendChild(counter)
     td1.appendChild(key)
@@ -48,32 +65,85 @@ save.addEventListener('click', e => {
     tr.appendChild(td0)
     tr.appendChild(td1)
     tr.appendChild(td2)
+    tr.appendChild(td3)
     tbody.appendChild(tr)
 
     localStorage.setItem(`${trans.value}`, `${gst.value}`)
     trans.value = ''
     gst.value = ''
+
+    // window.location.reload()
+  }
+  if (save.id === 'editb') {
+    localStorage.setItem(`${trans.value}`, `${gst.value}`)
+    localStorage.removeItem(localStorage.getItem(trans.value))
+    window.location.reload()
   }
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-  for (i = 0; i < localStorage.length; i++) {
-    counter = document.createTextNode(i + 1)
-    key = document.createTextNode(localStorage.key(i))
-    value = document.createTextNode(localStorage.getItem(localStorage.key(i)))
+for (i = 0; i < localStorage.length; i++) {
+  counter = document.createTextNode(i + 1)
+  key = document.createTextNode(localStorage.key(i))
+  value = document.createTextNode(localStorage.getItem(localStorage.key(i)))
 
-    tr = document.createElement('tr')
-    td0 = document.createElement('th')
-    td1 = document.createElement('td')
-    td2 = document.createElement('td')
+  tr = document.createElement('tr')
+  td0 = document.createElement('th')
+  td1 = document.createElement('td')
+  td2 = document.createElement('td')
+  td3 = document.createElement('td')
+  edit = document.createElement('button')
+  edit.innerHTML = 'Edit'
+  edit.setAttribute('class', 'edit')
+  edit.setAttribute('id', 'edit')
+  edit.setAttribute('value', `${i}`)
+  deleteData = document.createElement('button')
+  deleteData.innerHTML = 'Delete'
+  deleteData.setAttribute('class', 'deleteData')
+  deleteData.setAttribute('id', 'deleteData')
+  deleteData.setAttribute('value', `${i}`)
+  deleteData.setAttribute('data-bs-toggle', 'modal')
+  deleteData.setAttribute('data-bs-target', '#exampleModal')
 
-    td0.setAttribute('scope', 'row')
-    td0.appendChild(counter)
-    td1.appendChild(key)
-    td2.appendChild(value)
-    tr.appendChild(td0)
-    tr.appendChild(td1)
-    tr.appendChild(td2)
-    tbody.appendChild(tr)
-  }
+  td3.appendChild(edit)
+  td3.appendChild(deleteData)
+  td0.setAttribute('scope', 'row')
+  td0.appendChild(counter)
+  td1.appendChild(key)
+  td2.appendChild(value)
+  tr.appendChild(td0)
+  tr.appendChild(td1)
+  tr.appendChild(td2)
+  tr.appendChild(td3)
+  tbody.appendChild(tr)
+}
+
+// Edit values
+edit = document.querySelectorAll('#edit')
+
+edit.forEach(item => {
+  item.addEventListener('click', e => {
+    trans.value = localStorage.key(item.value)
+    gst.value = localStorage.getItem(localStorage.key(item.value))
+    save.setAttribute('id', 'editb')
+    save.innerHTML = 'Edit'
+  })
+})
+
+let modalbody = document.querySelector('#modalbody')
+let confirm = document.querySelector('#confirm')
+
+// Delete values
+deleteData = document.querySelectorAll('#deleteData')
+deleteData.forEach(item => {
+  item.addEventListener('click', () => {
+    modalbody.innerHTML = `Are you sure you want to delete ${localStorage.key(
+      item.value
+    )}?`
+    confirm.setAttribute('value', `${item.value}`)
+  })
+})
+
+confirm.addEventListener('click', e => {
+  localStorage.removeItem(localStorage.key(e.target.value))
+  window.location.reload()
 })

@@ -21,6 +21,14 @@
 .main .view .table {
   margin: 0;
 }
+.main .view .table .edit, .main .view .table .deleteData {
+  padding: 5px 20px;
+  border-style: none;
+  background-color: inherit;
+  border: 2px solid rgb(5, 5, 83);
+  border-radius: 1px;
+  margin-right: 5px;
+}
 .main .control {
   background-color: inherit;
   width: 40%;
