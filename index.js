@@ -10,140 +10,87 @@ trans.addEventListener('keydown', e => {
   ) {
     return
   } else {
-    // trans.style.borderColor = '#0a690a'
-    // trans.style.boxShadow =
-    //   'inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(138, 216, 118, 0.6)'
-
     e.preventDefault()
   }
 })
 
 let tbody = document.querySelector('tbody')
-let tr
-let td0
-let td1
-let td2
-let td3
-let counter
-let key
-let value
-let edit
-let deleteData
+let confirm = document.querySelector('#confirm')
+let tr, td0, td1, td2, td3, key, value, edit, remove
 
-save.addEventListener('click', e => {
-  e.preventDefault()
-  if (trans.value !== '' && gst.value != '' && save.id === 'save') {
-    let length = localStorage.length
-    let counter = document.createTextNode(length + 1)
-    let key = document.createTextNode(trans.value)
-    let value = document.createTextNode(gst.value)
+document.addEventListener('DOMContentLoaded', () => {
+  // Load Data from local storage
+  for (let i = 0; i < localStorage.length; i++) {
+    // Dynamically add data to the table
+    counter = document.createTextNode(i)
+    key = document.createTextNode(localStorage.key(i))
+    value = document.createTextNode(localStorage.getItem(localStorage.key(i)))
 
+    // Print Values on table
     tr = document.createElement('tr')
-    td0 = document.createElement('th')
+    td0 = document.createElement('td')
     td1 = document.createElement('td')
     td2 = document.createElement('td')
     td3 = document.createElement('td')
-    edit = document.createElement('button')
-    edit.innerHTML = 'Edit'
-    edit.setAttribute('class', 'edit')
-    edit.setAttribute('id', 'edit')
-    edit.setAttribute('value', `${i}`)
-    deleteData = document.createElement('button')
-    deleteData.innerHTML = 'Delete'
-    deleteData.setAttribute('class', 'deleteData')
-    deleteData.setAttribute('id', 'deleteData')
-    deleteData.setAttribute('value', `${i}`)
-    deleteData.setAttribute('data-bs-toggle', 'modal')
-    deleteData.setAttribute('data-bs-target', '#exampleModal')
 
-    td3.appendChild(edit)
-    td3.appendChild(deleteData)
-    td0.setAttribute('scope', 'row')
     td0.appendChild(counter)
     td1.appendChild(key)
     td2.appendChild(value)
     tr.appendChild(td0)
     tr.appendChild(td1)
     tr.appendChild(td2)
+
+    // Add control to the table
+    edit = document.createElement('button')
+    edit.setAttribute('class', 'edit')
+    edit.setAttribute('id', 'edit')
+    edit.setAttribute('value', `${i}`)
+    edit.innerHTML = 'Edit'
+    td3.appendChild(edit)
+
+    remove = document.createElement('button')
+    remove.setAttribute('class', 'remove')
+    remove.setAttribute('id', 'remove')
+    remove.setAttribute('value', `${i}`)
+    remove.setAttribute('data-bs-toggle', 'modal')
+    remove.setAttribute('data-bs-target', '#exampleModal')
+    remove.innerHTML = 'Delete'
+    td3.appendChild(remove)
     tr.appendChild(td3)
     tbody.appendChild(tr)
-
-    localStorage.setItem(`${trans.value}`, `${gst.value}`)
-    trans.value = ''
-    gst.value = ''
-
-    // window.location.reload()
   }
-  if (save.id === 'editb') {
+
+  // remove data from local storage
+  const remove_list = document.querySelectorAll('#remove')
+  let msg = document.querySelector('#modalbody')
+
+  for (const element of remove_list) {
+    element.addEventListener('click', e => {
+      msg.innerHTML = `Are you sure you want to delete ${localStorage.key(
+        element.value
+      )}`
+      confirm.addEventListener('click', () => {
+        localStorage.removeItem(localStorage.key(element.value))
+        window.location.reload()
+      })
+    })
+  }
+})
+
+// Check if transporter already in Local storage
+function duplicate (transporter) {
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage.key(i) === transporter) {
+      return true
+    }
+  }
+  return false
+}
+// Save data to local Storage
+save.addEventListener('click', e => {
+  e.preventDefault()
+  if (trans.value !== '' && gst.value !== '' && !duplicate(trans.value)) {
     localStorage.setItem(`${trans.value}`, `${gst.value}`)
-    localStorage.removeItem(localStorage.getItem(trans.value))
     window.location.reload()
   }
-})
-
-for (i = 0; i < localStorage.length; i++) {
-  counter = document.createTextNode(i + 1)
-  key = document.createTextNode(localStorage.key(i))
-  value = document.createTextNode(localStorage.getItem(localStorage.key(i)))
-
-  tr = document.createElement('tr')
-  td0 = document.createElement('th')
-  td1 = document.createElement('td')
-  td2 = document.createElement('td')
-  td3 = document.createElement('td')
-  edit = document.createElement('button')
-  edit.innerHTML = 'Edit'
-  edit.setAttribute('class', 'edit')
-  edit.setAttribute('id', 'edit')
-  edit.setAttribute('value', `${i}`)
-  deleteData = document.createElement('button')
-  deleteData.innerHTML = 'Delete'
-  deleteData.setAttribute('class', 'deleteData')
-  deleteData.setAttribute('id', 'deleteData')
-  deleteData.setAttribute('value', `${i}`)
-  deleteData.setAttribute('data-bs-toggle', 'modal')
-  deleteData.setAttribute('data-bs-target', '#exampleModal')
-
-  td3.appendChild(edit)
-  td3.appendChild(deleteData)
-  td0.setAttribute('scope', 'row')
-  td0.appendChild(counter)
-  td1.appendChild(key)
-  td2.appendChild(value)
-  tr.appendChild(td0)
-  tr.appendChild(td1)
-  tr.appendChild(td2)
-  tr.appendChild(td3)
-  tbody.appendChild(tr)
-}
-
-// Edit values
-edit = document.querySelectorAll('#edit')
-
-edit.forEach(item => {
-  item.addEventListener('click', e => {
-    trans.value = localStorage.key(item.value)
-    gst.value = localStorage.getItem(localStorage.key(item.value))
-    save.setAttribute('id', 'editb')
-    save.innerHTML = 'Edit'
-  })
-})
-
-let modalbody = document.querySelector('#modalbody')
-let confirm = document.querySelector('#confirm')
-
-// Delete values
-deleteData = document.querySelectorAll('#deleteData')
-deleteData.forEach(item => {
-  item.addEventListener('click', () => {
-    modalbody.innerHTML = `Are you sure you want to delete ${localStorage.key(
-      item.value
-    )}?`
-    confirm.setAttribute('value', `${item.value}`)
-  })
-})
-
-confirm.addEventListener('click', e => {
-  localStorage.removeItem(localStorage.key(e.target.value))
-  window.location.reload()
 })
