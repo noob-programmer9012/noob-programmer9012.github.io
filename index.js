@@ -16,19 +16,31 @@ trans.addEventListener('keydown', e => {
 
 let tbody = document.querySelector('tbody')
 let confirm = document.querySelector('#confirm')
-let tr, td0, td1, td2, td3, key, value, edit, remove
+let tr,
+  td0,
+  td1,
+  td2,
+  td3,
+  key,
+  value,
+  edit,
+  remove,
+  modalbody,
+  editicon,
+  deleteicon
+modalbody = document.querySelector('#modalbody')
 
 document.addEventListener('DOMContentLoaded', () => {
   // Load Data from local storage
   for (let i = 0; i < localStorage.length; i++) {
     // Dynamically add data to the table
-    counter = document.createTextNode(i)
+    counter = document.createTextNode(i + 1)
     key = document.createTextNode(localStorage.key(i))
     value = document.createTextNode(localStorage.getItem(localStorage.key(i)))
 
     // Print Values on table
     tr = document.createElement('tr')
-    td0 = document.createElement('td')
+    td0 = document.createElement('th')
     td1 = document.createElement('td')
     td2 = document.createElement('td')
     td3 = document.createElement('td')
@@ -42,39 +54,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add control to the table
     edit = document.createElement('button')
+    editicon = document.createElement('span')
+    editicon.setAttribute('class', 'material-symbols-outlined edit')
+    editicon.innerText = 'edit'
+    edit.appendChild(editicon)
     edit.setAttribute('class', 'edit')
     edit.setAttribute('id', 'edit')
     edit.setAttribute('value', `${i}`)
-    edit.innerHTML = 'Edit'
     td3.appendChild(edit)
 
     remove = document.createElement('button')
+    deleteicon = document.createElement('span')
+    deleteicon.setAttribute('class', 'material-symbols-outlined delete')
+    deleteicon.innerText = 'delete'
+    remove.appendChild(deleteicon)
     remove.setAttribute('class', 'remove')
     remove.setAttribute('id', 'remove')
     remove.setAttribute('value', `${i}`)
     remove.setAttribute('data-bs-toggle', 'modal')
     remove.setAttribute('data-bs-target', '#exampleModal')
-    remove.innerHTML = 'Delete'
+
     td3.appendChild(remove)
     tr.appendChild(td3)
     tbody.appendChild(tr)
   }
-
-  // remove data from local storage
-  const remove_list = document.querySelectorAll('#remove')
-  let msg = document.querySelector('#modalbody')
-
-  for (const element of remove_list) {
+  // Give modal delete button value
+  remove = document.querySelectorAll('#remove')
+  remove.forEach(element => {
     element.addEventListener('click', e => {
-      msg.innerHTML = `Are you sure you want to delete ${localStorage.key(
-        element.value
+      confirm.setAttribute('value', `${e.target.value}`)
+      modalbody.innerHTML = `Are you sure you want to delete ${localStorage.key(
+        e.target.value
       )}`
-      confirm.addEventListener('click', () => {
-        localStorage.removeItem(localStorage.key(element.value))
-        window.location.reload()
-      })
     })
-  }
+  })
 })
 
 // Check if transporter already in Local storage
@@ -93,4 +106,10 @@ save.addEventListener('click', e => {
     localStorage.setItem(`${trans.value}`, `${gst.value}`)
     window.location.reload()
   }
+})
+
+// Delete Data
+confirm.addEventListener('click', e => {
+  localStorage.removeItem(localStorage.key(e.target.value))
+  window.location.reload()
 })
