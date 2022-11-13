@@ -11,12 +11,25 @@
   align-items: center;
   justify-content: center;
   min-height: 800px;
+  padding-top: 50px;
 }
 .main .view {
   background-color: inherit;
   flex: 2;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+.main .view .search {
+  width: 80%;
+  align-self: center;
+  border: none;
+  border-bottom: 2px solid blue;
+  font-size: large;
+  font-weight: 500;
+}
+.main .view .search:focus {
+  outline: none;
 }
 .main .view .table {
   margin: 0;

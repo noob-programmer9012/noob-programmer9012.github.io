@@ -4,6 +4,27 @@ let gst = document.querySelector('#gst')
 let allowed = /^[a-zA-Z ]*$/
 let error = document.querySelector('.error')
 
+function filerTable () {
+  var input, filter, table, tr, td, i, txtValue
+  input = document.getElementById('search')
+  filter = input.value.toUpperCase()
+  table = document.getElementById('myTable')
+  tr = table.getElementsByTagName('tr')
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName('td')[0]
+    if (td) {
+      txtValue = td.textContent || td.innerText
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = ''
+      } else {
+        tr[i].style.display = 'none'
+      }
+    }
+  }
+}
+
 trans.addEventListener('keydown', e => {
   if (e.key.match(allowed)) {
     error.style.display = 'none'
@@ -127,8 +148,13 @@ save.addEventListener('click', e => {
       form.reset()
       window.location.reload()
     } else {
-      error.style.display = 'block'
-      error.innerHTML = 'Duplicate entry found.'
+      if (trans.value === '' || gst.value === '') {
+        error.style.display = 'block'
+        error.innerHTML = 'Input values must not be blank.'
+      } else {
+        error.style.display = 'block'
+        error.innerHTML = 'Duplicate entry found.'
+      }
     }
   }
   if (save.innerText === 'Change') {
@@ -142,13 +168,14 @@ save.addEventListener('click', e => {
       form.reset()
       window.location.reload()
     } else {
-      error.style.display = 'block'
-      error.innerHTML = 'Duplicate entry found.'
+      if (trans.value === '' || gst.value === '') {
+        error.style.display = 'block'
+        error.innerHTML = 'Input values must not be blank.'
+      } else {
+        error.style.display = 'block'
+        error.innerHTML = 'Duplicate entry found.'
+      }
     }
-  }
-  if (trans.value === '' || gst.value === '') {
-    error.style.display = 'block'
-    error.innerHTML = 'Input values must not be blank.'
   }
 })
 
