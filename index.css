@@ -9,13 +9,14 @@
   height: auto;
   display: flex;
   align-items: center;
+  justify-content: center;
+  min-height: 800px;
 }
 .main .view {
   background-color: inherit;
   flex: 2;
   display: flex;
   justify-content: center;
-  margin-top: 50px;
 }
 .main .view .table {
   margin: 0;
@@ -25,11 +26,12 @@
 .main .view .table .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
-.main .view .table .edit, .main .view .table .remove {
+.main .view .table .edit, .main .view .table .delete {
   padding: 0px 5px 0px 5px;
   background-color: inherit;
   margin-right: 5px;
   border: none;
+  cursor: pointer;
 }
 .main .view .table .edit {
   color: rgb(0, 17, 255);
@@ -42,10 +44,28 @@
   flex: 1;
   position: -webkit-sticky;
   position: sticky;
-  top: 35%;
   display: flex;
+  top: 30%;
   align-self: flex-start;
   justify-content: center;
+  flex-direction: column;
+}
+.main .control .error {
+  color: red;
+  font-size: larger;
+  font-weight: 500;
+  align-self: center;
+  padding-top: 10px;
+  display: none;
+}
+.main .control form {
+  padding: 10px 10px;
+}
+.main .control form .form-control {
+  border: none;
+  border-radius: 0px;
+  border-bottom: 2px solid blue;
+  margin-bottom: 10px;
 }
 .main .control .card.form {
   border: none;
