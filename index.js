@@ -1,7 +1,7 @@
 let save = document.querySelector('#save')
 let trans = document.querySelector('#trans')
 let gst = document.querySelector('#gst')
-let allowed = /^[a-zA-Z ]*$/
+let allowed = /^[A-Z-_&]*$/i
 let error = document.querySelector('.error')
 
 function filerTable () {
