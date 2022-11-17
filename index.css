@@ -1,35 +1,47 @@
-* {
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+body {
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
 }
 
 .main {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: auto;
   height: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  padding-top: 50px;
 }
 .main .view {
   background-color: inherit;
   flex: 2;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.main .view .search {
+.main .view .input-group {
   width: 80%;
-  align-self: center;
-  border: none;
-  border-bottom: 2px solid blue;
-  font-size: large;
-  font-weight: 500;
 }
-.main .view .search:focus {
+.main .view .input-group .search-input {
+  width: 100%;
+  position: relative;
+  padding: 10px 10px;
+  border: 2px solid rgba(129, 0, 250, 0.8274509804);
+}
+.main .view .input-group .search-input:focus {
   outline: none;
+}
+.main .view .input-group .btn {
+  position: absolute;
+  right: 0;
+  border: none;
+}
+.main .view .input-group .btn span {
+  margin-top: 2.5px;
+  font-size: 2rem;
+  color: rgba(129, 0, 250, 0.8274509804);
 }
 .main .view .table {
   margin: 0;
@@ -47,7 +59,7 @@
   cursor: pointer;
 }
 .main .view .table .edit {
-  color: rgb(0, 17, 255);
+  color: rgba(129, 0, 250, 0.8274509804);
 }
 .main .view .table .delete {
   color: rgb(255, 0, 0);
@@ -58,7 +70,7 @@
   position: -webkit-sticky;
   position: sticky;
   display: flex;
-  top: 30%;
+  top: 40%;
   align-self: flex-start;
   justify-content: center;
   flex-direction: column;
@@ -77,8 +89,25 @@
 .main .control form .form-control {
   border: none;
   border-radius: 0px;
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid rgba(129, 0, 250, 0.8274509804);
   margin-bottom: 10px;
+}
+.main .control form .buttons {
+  display: flex;
+  gap: 1rem;
+}
+.main .control form .save {
+  background-color: rgba(129, 0, 250, 0.8274509804);
+  color: #ffffff;
+  font-size: 1.2rem;
+  box-shadow: 5px 5px 5px rgba(167, 0, 189, 0.5058823529);
+}
+.main .control form .cancel {
+  background-color: #810202;
+  color: #ffffff;
+  font-size: 1.2rem;
+  box-shadow: 5px 5px 5px rgba(240, 0, 0, 0.4784313725);
+  display: none;
 }
 .main .control .card.form {
   border: none;
@@ -91,7 +120,7 @@
 }
 .main .card .form-control:focus {
   border-color: #0a690a;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(138, 216, 118, 0.6);
+  box-shadow: none;
 }
 .main .card .wrong {
   border-color: #FF0000;
@@ -99,6 +128,9 @@
 }
 
 @media only screen and (max-device-width: 952px) {
+  body {
+    font-size: 1.3rem;
+  }
   .main {
     display: flex;
     flex-direction: column-reverse;
@@ -116,6 +148,7 @@
     width: 100%;
     margin-bottom: 3em;
     top: 0;
+    flex: 0;
     box-shadow: 10px 10px 10px 1px rgba(128, 128, 128, 0.753);
   }
   .main .control .form {

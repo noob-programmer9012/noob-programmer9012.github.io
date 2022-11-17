@@ -3,6 +3,7 @@ let trans = document.querySelector('#trans')
 let gst = document.querySelector('#gst')
 let allowed = /^[A-Z-_&]*$/i
 let error = document.querySelector('.error')
+let cancel = document.querySelector('#cancel')
 
 function filerTable () {
   var input, filter, table, tr, td, i, txtValue
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       save.setAttribute('value', e.target.title)
       trans.value = localStorage.key(e.target.title)
       gst.value = localStorage.getItem(localStorage.key(e.target.title))
+      cancel.style.display = 'block'
     })
   })
   // End of DOM
@@ -182,5 +184,9 @@ save.addEventListener('click', e => {
 // Delete Data
 confirm.addEventListener('click', e => {
   localStorage.removeItem(localStorage.key(e.target.value))
+  window.location.reload()
+})
+
+cancel.addEventListener('click', e => {
   window.location.reload()
 })
