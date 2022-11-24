@@ -4,6 +4,8 @@ const main = document.querySelector('.main')
 const modal = document.querySelector('#modal')
 const confirm = document.querySelector('#confirm')
 const closeModal = document.querySelectorAll('#modal-close')
+const nav = document.querySelector('.navbar')
+const mobileView = window.matchMedia('(max-width: 840px)')
 
 closeModal.forEach(item => {
   item.addEventListener('click', () => {
@@ -32,15 +34,33 @@ function filterTable () {
   }
 }
 
-function clicked () {
-  sidebar.classList.toggle('show')
-  if (sidebar.style.width === '270px') {
-    sidebar.style.width = '60px'
-  } else {
-    sidebar.style.width = '270px'
+function clicked (e) {
+  if (mobileView.matches) {
+    sidebar.classList.add('show')
+    main.style.opacity = 0.2
+    nav.style.opacity = 0.2
+  }
+  if (!mobileView.matches) {
+    if (sidebar.style.width === '270px') {
+      sidebar.style.width = '60px'
+    } else {
+      sidebar.style.width = '270px'
+    }
   }
 }
+
+function mobileBehave (e) {
+  if (mobileView.matches) {
+    if (sidebar.className === 'sidebar show') {
+      sidebar.classList.remove('show')
+      main.style.opacity = 1
+      nav.style.opacity = 1
+    }
+  }
+}
+
 toggleNav.addEventListener('click', clicked)
+main.addEventListener('click', mobileBehave)
 
 function setAttributes (elem, attr) {
   for (let key in attr) {
@@ -59,7 +79,7 @@ const save = document.querySelector('#save')
 function duplicate (transporter, gst) {
   for (const elem in obj) {
     if (
-      `${elem.toUpperCase().trim()}` === transporter.toUpperCase() &&
+      `${elem.toUpperCase().trim()}` === transporter.toUpperCase() ||
       `${obj[elem].toUpperCase().trim()}` === gst.toUpperCase()
     ) {
       return true
@@ -71,7 +91,7 @@ function duplicate (transporter, gst) {
 save.addEventListener('click', saveData)
 function saveData (e) {
   e.preventDefault()
-  if (trans.value !== '' || gst.value !== '') {
+  if (trans.value !== '' && gst.value !== '') {
     if (e.target.innerText === 'Submit') {
       if (!duplicate(trans.value, gst.value)) {
         localStorage.setItem(
@@ -181,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gst.value = obj[trans.value]
       save.value = data[e.target.title]
       const cancel = document.querySelector('#cancel')
-      cancel.classList.add('show')
+      cancel.classList.add('cancel-show')
     })
   })
 })
