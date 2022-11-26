@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transporters</title>    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -46,7 +47,10 @@
         <div class="main">
             <div class="card">
                 <div class="view">
-                    <input type="text" class="search" id="search" autocomplete="off" placeholder="Search" onkeyup="filterTable()">
+                    <div class="search-view">
+                        <i class="fa fa-fw fa-search"></i>
+                        <input type="text" class="search" id="search" autocomplete="off" placeholder="Search" onkeyup="filterTable()">
+                    </div>
                     <table class="table" id="myTable">
                         <thead>
                             <tr>

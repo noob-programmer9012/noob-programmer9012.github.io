@@ -103,17 +103,32 @@ html {
   justify-content: center;
   gap: 0.5rem;
 }
-.container .main .card .view .search {
-  padding: 10px 0px;
-  border: none;
-  background-color: #222230;
+.container .main .card .view .search-view {
   width: 90%;
-  color: #FFFFFF;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  display: inline-flex;
+  align-items: stretch;
+}
+.container .main .card .view .search-view .fa-search {
+  background-color: #222230;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.5rem;
+  color: #A6ABBD;
+}
+.container .main .card .view .search-view .search {
+  width: 100%;
+  padding: 10px 0px;
   font-size: medium;
   font-weight: 400;
+  background-color: #222230;
+  color: #FFFFFF;
   letter-spacing: 0.4px;
+  border: none;
 }
-.container .main .card .view .search:focus {
+.container .main .card .view .search-view .search:focus {
   outline: none;
 }
 .container .main .card .view .table {
@@ -342,7 +357,7 @@ html {
     padding: 0;
     z-index: 0;
   }
-  .container .main .card .view .search {
+  .container .main .card .view .search-view {
     width: 100%;
   }
   .container .main .card .view .table {
