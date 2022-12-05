@@ -36,7 +36,7 @@ function filterTable () {
   }
 }
 
-function clicked (e) {
+function clicked () {
   if (mobileView.matches) {
     sidebar.classList.add('show')
     main.style.opacity = 0.2
@@ -62,7 +62,7 @@ function clicked (e) {
 
 function mobileBehave (e) {
   if (mobileView.matches) {
-    if (sidebar.className === 'sidebar show') {
+    if (e.target.className !== 'sidebar show') {
       sidebar.classList.remove('show')
       main.style.opacity = 1
       nav.style.opacity = 1
@@ -87,11 +87,32 @@ for (let i = 0; i < localStorage.length; i++) {
 let tbody = document.querySelector('tbody')
 const save = document.querySelector('#save')
 
-function duplicate (transporter, gst) {
-  for (const elem in obj) {
+function duplicateTrans (transporter) {
+  let keys = []
+  for (let i = 0; i < localStorage.length; i++) {
+    keys.push(localStorage.key(i))
+  }
+  keys.sort()
+
+  for (let i = 0; i < keys.length; i++) {
+    if (keys[i].toUpperCase().trim() === transporter.toUpperCase().trim()) {
+      return true
+    }
+  }
+  return false
+}
+
+function duplicateGst (gst) {
+  let keys = []
+  for (let i = 0; i < localStorage.length; i++) {
+    keys.push(localStorage.key(i))
+  }
+  keys.sort()
+
+  for (let i = 0; i < keys.length; i++) {
     if (
-      `${elem.toUpperCase().trim()}` === transporter.toUpperCase() ||
-      `${obj[elem].toUpperCase().trim()}` === gst.toUpperCase()
+      localStorage.getItem(keys[i]).toUpperCase().trim() ===
+      gst.toUpperCase().trim()
     ) {
       return true
     }
@@ -99,12 +120,14 @@ function duplicate (transporter, gst) {
   return false
 }
 
+let temp = []
+
 save.addEventListener('click', saveData)
 function saveData (e) {
   e.preventDefault()
   if (trans.value !== '' && gst.value !== '') {
     if (e.target.innerText === 'Submit') {
-      if (!duplicate(trans.value, gst.value)) {
+      if (!duplicateTrans(trans.value) && !duplicateGst(gst.value)) {
         localStorage.setItem(
           trans.value.toUpperCase().trim(),
           gst.value.toUpperCase().trim()
@@ -112,24 +135,39 @@ function saveData (e) {
         window.location.reload()
       } else {
         alert('Duplicate Entry')
+        document.querySelector('form').reset()
+        trans.focus()
       }
     } else if (e.target.innerText === 'Change') {
-      if (!duplicate(trans.value, gst.value)) {
-        localStorage.removeItem(e.target.value)
+      localStorage.removeItem(e.target.value)
+      if (duplicateTrans(trans.value) && duplicateGst(gst.value)) {
+        alert('No changes were made')
+      } else if (duplicateTrans(trans.value)) {
+        alert('Transporter already exist')
+      } else if (duplicateGst(gst.value)) {
+        alert('This GST Number belongs to another transporter')
+      } else {
         localStorage.setItem(
           trans.value.toUpperCase().trim(),
           gst.value.toUpperCase().trim()
         )
-        e.target.innerText = 'Submit'
-        save.click()
-      } else {
-        alert('Duplicate Entry')
+        window.location.reload()
       }
     }
   } else {
     alert('empty')
   }
 }
+
+cancel.addEventListener('click', e => {
+  e.preventDefault()
+  temp = [
+    localStorage.key(e.target.value),
+    localStorage.getItem(localStorage.key(e.target.value))
+  ]
+  localStorage.setItem(temp[0], temp[1])
+  window.location.reload()
+})
 
 let tr, td0, td1, td2, td3, key, value, edit, remove
 
@@ -210,9 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
       save.innerText = 'Change'
       trans.value = data[e.target.title]
       gst.value = obj[trans.value]
-      save.value = data[e.target.title]
+      save.value = e.target.title
       const cancel = document.querySelector('#cancel')
       cancel.classList.add('cancel-show')
+      cancel.value = e.target.title
     })
   })
 

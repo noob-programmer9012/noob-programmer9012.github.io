@@ -363,7 +363,7 @@ html {
   }
   .container .sidebar .navigation-mobile > li {
     display: flex;
-    padding: 5px 66px;
+    padding: 5px 25px;
   }
   .container .sidebar .navigation-mobile > li:nth-child(even) {
     background-color: #222230;
