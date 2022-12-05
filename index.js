@@ -6,6 +6,8 @@ const confirm = document.querySelector('#confirm')
 const closeModal = document.querySelectorAll('#modal-close')
 const nav = document.querySelector('.navbar')
 const mobileView = window.matchMedia('(max-width: 840px)')
+let li = document.querySelectorAll('.li')
+let icons = document.querySelectorAll('.navicons > .fa')
 
 closeModal.forEach(item => {
   item.addEventListener('click', () => {
@@ -39,12 +41,21 @@ function clicked (e) {
     sidebar.classList.add('show')
     main.style.opacity = 0.2
     nav.style.opacity = 0.2
+    li.forEach(item => {
+      item.style.display = ''
+    })
   }
   if (!mobileView.matches) {
-    if (sidebar.style.width === '270px') {
+    if (sidebar.style.width === '220px') {
       sidebar.style.width = '60px'
+      li.forEach(item => {
+        item.style.display = 'none'
+      })
     } else {
-      sidebar.style.width = '270px'
+      sidebar.style.width = '220px'
+      li.forEach(item => {
+        item.style.display = ''
+      })
     }
   }
 }
@@ -203,5 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const cancel = document.querySelector('#cancel')
       cancel.classList.add('cancel-show')
     })
+  })
+
+  sidebar.style.width = '60px'
+  li.forEach(item => {
+    item.style.display = 'none'
   })
 })

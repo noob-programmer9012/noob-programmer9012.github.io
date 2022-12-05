@@ -13,9 +13,9 @@
     <div class="navbar">
         <div id="side-toggle" class="side-toggle">
             <div class="mobile" id="mobile">
-                <div class="sticks"></div>
-                <div class="sticks"></div>
-                <div class="sticks"></div>
+                <span class="sticks"></span>
+                <span class="sticks"></span>
+                <span class="sticks"></span>
             </div>            
             <div class="brand">
                 <h1>PA<span>R</span>TH</h1>
@@ -31,11 +31,22 @@
     <div class="container">
         <div class="sidebar">
             <ul class="sidebar-nav">
-                <li>Parth</li>
-                <li>Jiyan</li>
-                <li>Sweety</li>
-                <li>Pravin</li>
-                <li>Meena</li>
+                <div class="navicons">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <li><a class="li" href="#">Dashboard</a></li>
+                </div>
+                <div class="navicons">
+                    <i class="fa fa-table" aria-hidden="true"></i>
+                    <li><a class="li" href="#">Table</a></li>
+                </div>
+                <div class="navicons">
+                    <i class="fa fa-cloud" aria-hidden="true"></i>
+                    <li><a class="li" href="#">API</a></li>
+                </div>
+                <div class="navicons">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <li><a class="li" href="#">Client</a></li>
+                </div>
             </ul>
             <ul class="navigation-mobile">
                 <li>Home</li>
@@ -94,9 +105,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5>DELETE</h5>
-                    <button type="button" class="close" id="modal-close">X</button>
+                    <button type="button" class="close" id="modal-close"><i class="fa fa-times"></i></button>
                 </div>
-                <div class="modal-body" id="modalbody">                
+                <div class="modal-body" id="modalbody">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="close-modal" id="modal-close">Close</button>
