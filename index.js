@@ -139,20 +139,6 @@ function saveData (e) {
         trans.focus()
       }
     } else if (e.target.innerText === 'Change') {
-      localStorage.removeItem(e.target.value)
-      if (duplicateTrans(trans.value) && duplicateGst(gst.value)) {
-        alert('No changes were made')
-      } else if (duplicateTrans(trans.value)) {
-        alert('Transporter already exist')
-      } else if (duplicateGst(gst.value)) {
-        alert('This GST Number belongs to another transporter')
-      } else {
-        localStorage.setItem(
-          trans.value.toUpperCase().trim(),
-          gst.value.toUpperCase().trim()
-        )
-        window.location.reload()
-      }
     }
   } else {
     alert('empty')
@@ -260,3 +246,22 @@ document.addEventListener('DOMContentLoaded', () => {
     item.style.display = 'none'
   })
 })
+
+// localStorage.removeItem(localStorage.key(e.target.value))
+// temp = [
+//   localStorage.key(e.target.value),
+//   localStorage.getItem(localStorage.key(e.target.value))
+// ]
+// if (duplicateTrans(trans.value) && duplicateGst(gst.value)) {
+//   alert('No changes were made')
+// } else if (duplicateTrans(trans.value)) {
+//   alert('Transporter already exist')
+// } else if (duplicateGst(gst.value)) {
+//   alert('This GST Number belongs to another transporter')
+// } else {
+//   localStorage.setItem(
+//     trans.value.toUpperCase().trim(),
+//     gst.value.toUpperCase().trim()
+//   )
+//   window.location.reload()
+// }

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
-html, body {
+h1, .sticks, .mobile {
   -webkit-touch-callout: none;
   -moz-user-select: none;
    -ms-user-select: none;
@@ -63,6 +63,9 @@ html {
   gap: 1rem;
   list-style: none;
   color: #FFFFFF;
+}
+.navbar .navigation li {
+  cursor: pointer;
 }
 
 .container {
@@ -164,6 +167,9 @@ html {
   border-collapse: collapse;
   border: 1px solid rgba(230, 232, 237, 0.1019607843);
   width: 90%;
+}
+.container .main .card .view .table span {
+  cursor: pointer;
 }
 .container .main .card .view .table .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
