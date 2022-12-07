@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
-h1, .sticks, .mobile, li, th, button {
+h1, .sticks, .mobile, li, th, button, a, p {
   -webkit-touch-callout: none;
   -moz-user-select: none;
    -ms-user-select: none;
@@ -211,9 +211,38 @@ html {
   position: sticky;
   top: calc(50vh - 85px);
 }
+.container .main .card .control .error-section {
+  width: 75%;
+  height: 40px;
+  top: -20px;
+  position: absolute;
+  background-color: #DC3545;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  border: 0px;
+  border-radius: 10px;
+  display: none;
+}
+.container .main .card .control .error-section button {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.container .main .card .control .error-section p, .container .main .card .control .error-section .fa {
+  color: #FFFFFF;
+  size: 1.5rem;
+  pointer-events: none;
+}
+.container .main .card .control .error-section .fa {
+  cursor: pointer;
+}
 .container .main .card .control .form {
   width: 90%;
-  padding: 25px 10px;
+  padding: 30px 10px;
 }
 .container .main .card .control .form form {
   display: flex;

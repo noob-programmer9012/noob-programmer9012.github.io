@@ -8,6 +8,20 @@ const nav = document.querySelector('.navbar')
 const mobileView = window.matchMedia('(max-width: 840px)')
 let li = document.querySelectorAll('.li')
 let icons = document.querySelectorAll('.navicons > .fa')
+let errorSection = document.querySelector('.error-section')
+let error = document.querySelector('.error')
+let formControl = document.querySelectorAll('.form-control')
+let closeError = document.querySelector('#closeError')
+
+closeError.addEventListener('mousedown', () => {
+  errorSection.style.display = 'none'
+})
+
+formControl.forEach(item => {
+  item.addEventListener('keydown', () => {
+    errorSection.style.display = 'none'
+  })
+})
 
 closeModal.forEach(item => {
   item.addEventListener('click', () => {
@@ -61,7 +75,7 @@ function clicked () {
 }
 
 function mobileBehave (e) {
-  if (mobileView.matches && sidebar.classList.contains('show')) {    
+  if (mobileView.matches && sidebar.classList.contains('show')) {
     if (!sidebar.contains(e.target)) {
       sidebar.classList.remove('show')
       main.style.opacity = 1
@@ -69,7 +83,10 @@ function mobileBehave (e) {
     }
   }
 
-  if (mobileView.matches && (e.target.id == 'mobile' || e.target.className === 'sticks')) {
+  if (
+    mobileView.matches &&
+    (e.target.id == 'mobile' || e.target.className === 'sticks')
+  ) {
     clicked()
   }
 }
@@ -93,7 +110,7 @@ const save = document.querySelector('#save')
 
 function duplicateTrans (transporter, tempTrans) {
   let keys = []
-  for (let i = 0; i < localStorage.length; i++) {    
+  for (let i = 0; i < localStorage.length; i++) {
     keys.push(localStorage.key(i))
   }
   keys.sort()
@@ -101,7 +118,9 @@ function duplicateTrans (transporter, tempTrans) {
   for (let i = 0; i < keys.length; i++) {
     if (tempTrans.toUpperCase().trim() === keys[i].toUpperCase().trim()) {
       continue
-    } else if (keys[i].toUpperCase().trim() === transporter.toUpperCase().trim()) {
+    } else if (
+      keys[i].toUpperCase().trim() === transporter.toUpperCase().trim()
+    ) {
       return true
     }
   }
@@ -144,40 +163,45 @@ function saveData (e) {
         )
         window.location.reload()
       } else {
-        alert('Duplicate Entry')
-        document.querySelector('form').reset()
+        errorSection.style.display = 'flex'
+        error.innerText = 'Duplicate Entry!'
         trans.focus()
       }
     } else if (e.target.innerText === 'Change') {
-      if (trans.value.toUpperCase().trim() === e.target.value 
-          && gst.value.toUpperCase().trim() === localStorage[e.target.value]) {
-        alert("No changes were made")
+      if (
+        trans.value.toUpperCase().trim() === e.target.value &&
+        gst.value.toUpperCase().trim() === localStorage[e.target.value]
+      ) {
+        errorSection.style.display = 'flex'
+        error.innerText = 'No changes were made!'
       } else {
         tempTrans = e.target.value
         tempGst = localStorage[e.target.value]
         if (duplicateTrans(trans.value.toUpperCase().trim(), tempTrans)) {
-          alert("Transporter already exist")          
+          errorSection.style.display = 'flex'
+          error.innerText = 'Transporter already exist!'
         } else if (duplicateGst(gst.value.toUpperCase().trim())) {
-          alert("Gst number already assigned to antother transporter.")          
+          errorSection.style.display = 'flex'
+          error.innerText = 'Gst number assigned to another transporter!'
         } else {
           localStorage.removeItem(e.target.value)
-          localStorage.setItem(trans.value.toUpperCase().trim(), gst.value.toUpperCase().trim())
-          window.location.reload()  
+          localStorage.setItem(
+            trans.value.toUpperCase().trim(),
+            gst.value.toUpperCase().trim()
+          )
+          window.location.reload()
         }
-        
-      }      
+      }
     }
   } else {
-    alert('empty')
+    errorSection.style.display = 'flex'
+    error.innerText = 'All fields are mandatory'
   }
 }
 
 cancel.addEventListener('click', e => {
-  e.preventDefault()  
-  temp = [
-    e.target.value,
-    localStorage[e.target.value]
-  ]
+  e.preventDefault()
+  temp = [e.target.value, localStorage[e.target.value]]
   localStorage.setItem(temp[0], temp[1])
   window.location.reload()
 })
@@ -271,5 +295,5 @@ document.addEventListener('DOMContentLoaded', () => {
   sidebar.style.width = '60px'
   li.forEach(item => {
     item.style.display = 'none'
-  })  
+  })
 })
