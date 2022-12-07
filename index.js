@@ -87,15 +87,17 @@ for (let i = 0; i < localStorage.length; i++) {
 let tbody = document.querySelector('tbody')
 const save = document.querySelector('#save')
 
-function duplicateTrans (transporter) {
+function duplicateTrans (transporter, tempTrans) {
   let keys = []
-  for (let i = 0; i < localStorage.length; i++) {
+  for (let i = 0; i < localStorage.length; i++) {    
     keys.push(localStorage.key(i))
   }
   keys.sort()
 
   for (let i = 0; i < keys.length; i++) {
-    if (keys[i].toUpperCase().trim() === transporter.toUpperCase().trim()) {
+    if (tempTrans.toUpperCase().trim() === keys[i].toUpperCase().trim()) {
+      continue
+    } else if (keys[i].toUpperCase().trim() === transporter.toUpperCase().trim()) {
       return true
     }
   }
@@ -110,7 +112,10 @@ function duplicateGst (gst) {
   keys.sort()
 
   for (let i = 0; i < keys.length; i++) {
-    if (
+    // alert(localStorage.getItem(keys[i]))
+    if (tempGst === localStorage.getItem(keys[i])) {
+      continue
+    } else if (
       localStorage.getItem(keys[i]).toUpperCase().trim() ===
       gst.toUpperCase().trim()
     ) {
@@ -121,6 +126,7 @@ function duplicateGst (gst) {
 }
 
 let temp = []
+let tempTrans, tempGst
 
 save.addEventListener('click', saveData)
 function saveData (e) {
@@ -139,6 +145,23 @@ function saveData (e) {
         trans.focus()
       }
     } else if (e.target.innerText === 'Change') {
+      if (trans.value.toUpperCase().trim() === e.target.value 
+          && gst.value.toUpperCase().trim() === localStorage[e.target.value]) {
+        alert("No changes were made")
+      } else {
+        tempTrans = e.target.value
+        tempGst = localStorage[e.target.value]
+        if (duplicateTrans(trans.value.toUpperCase().trim(), tempTrans)) {
+          alert("Transporter already exist")          
+        } else if (duplicateGst(gst.value.toUpperCase().trim())) {
+          alert("Gst number already assigned to antother transporter.")          
+        } else {
+          localStorage.removeItem(e.target.value)
+          localStorage.setItem(trans.value.toUpperCase().trim(), gst.value.toUpperCase().trim())
+          window.location.reload()  
+        }
+        
+      }      
     }
   } else {
     alert('empty')
@@ -146,10 +169,10 @@ function saveData (e) {
 }
 
 cancel.addEventListener('click', e => {
-  e.preventDefault()
+  e.preventDefault()  
   temp = [
-    localStorage.key(e.target.value),
-    localStorage.getItem(localStorage.key(e.target.value))
+    e.target.value,
+    localStorage[e.target.value]
   ]
   localStorage.setItem(temp[0], temp[1])
   window.location.reload()
@@ -234,10 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
       save.innerText = 'Change'
       trans.value = data[e.target.title]
       gst.value = obj[trans.value]
-      save.value = e.target.title
+      save.value = data[e.target.title]
       const cancel = document.querySelector('#cancel')
       cancel.classList.add('cancel-show')
-      cancel.value = e.target.title
+      cancel.value = data[e.target.title]
     })
   })
 
