@@ -37,14 +37,14 @@ function filterTable () {
 }
 
 function clicked () {
-  if (mobileView.matches) {
-    sidebar.classList.add('show')
-    main.style.opacity = 0.2
-    nav.style.opacity = 0.2
-    li.forEach(item => {
-      item.style.display = ''
-    })
-  }
+  // if (mobileView.matches) {
+  //   sidebar.classList.add('show')
+  //   main.style.opacity = 0.2
+  //   nav.style.opacity = 0.2
+  //   li.forEach(item => {
+  //     item.style.display = ''
+  //   })
+  // }
   if (!mobileView.matches) {
     if (sidebar.style.width === '220px') {
       sidebar.style.width = '60px'
@@ -61,17 +61,26 @@ function clicked () {
 }
 
 function mobileBehave (e) {
-  if (mobileView.matches) {
-    if (e.target.className !== 'sidebar show') {
+  if (mobileView.matches && sidebar.classList.contains('show')) {    
+    if (!sidebar.contains(e.target)) {
       sidebar.classList.remove('show')
       main.style.opacity = 1
       nav.style.opacity = 1
     }
   }
+
+  if (mobileView.matches && e.target.id === 'mobile') {
+    sidebar.classList.add('show')
+    main.style.opacity = 0.2
+    nav.style.opacity = 0.2
+    li.forEach(item => {
+      item.style.display = ''
+    })
+  }
 }
 
+document.addEventListener('click', mobileBehave)
 toggleNav.addEventListener('click', clicked)
-main.addEventListener('click', mobileBehave)
 
 function setAttributes (elem, attr) {
   for (let key in attr) {
@@ -133,7 +142,7 @@ function saveData (e) {
   e.preventDefault()
   if (trans.value !== '' && gst.value !== '') {
     if (e.target.innerText === 'Submit') {
-      if (!duplicateTrans(trans.value) && !duplicateGst(gst.value)) {
+      if (!duplicateTrans(trans.value, '') && !duplicateGst(gst.value, '')) {
         localStorage.setItem(
           trans.value.toUpperCase().trim(),
           gst.value.toUpperCase().trim()
@@ -267,24 +276,5 @@ document.addEventListener('DOMContentLoaded', () => {
   sidebar.style.width = '60px'
   li.forEach(item => {
     item.style.display = 'none'
-  })
+  })  
 })
-
-// localStorage.removeItem(localStorage.key(e.target.value))
-// temp = [
-//   localStorage.key(e.target.value),
-//   localStorage.getItem(localStorage.key(e.target.value))
-// ]
-// if (duplicateTrans(trans.value) && duplicateGst(gst.value)) {
-//   alert('No changes were made')
-// } else if (duplicateTrans(trans.value)) {
-//   alert('Transporter already exist')
-// } else if (duplicateGst(gst.value)) {
-//   alert('This GST Number belongs to another transporter')
-// } else {
-//   localStorage.setItem(
-//     trans.value.toUpperCase().trim(),
-//     gst.value.toUpperCase().trim()
-//   )
-//   window.location.reload()
-// }
