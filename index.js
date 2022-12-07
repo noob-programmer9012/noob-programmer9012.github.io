@@ -37,14 +37,14 @@ function filterTable () {
 }
 
 function clicked () {
-  // if (mobileView.matches) {
-  //   sidebar.classList.add('show')
-  //   main.style.opacity = 0.2
-  //   nav.style.opacity = 0.2
-  //   li.forEach(item => {
-  //     item.style.display = ''
-  //   })
-  // }
+  if (mobileView.matches) {
+    sidebar.classList.add('show')
+    main.style.opacity = 0.2
+    nav.style.opacity = 0.2
+    li.forEach(item => {
+      item.style.display = ''
+    })
+  }
   if (!mobileView.matches) {
     if (sidebar.style.width === '220px') {
       sidebar.style.width = '60px'
@@ -69,13 +69,8 @@ function mobileBehave (e) {
     }
   }
 
-  if (mobileView.matches && e.target.id === 'mobile') {
-    sidebar.classList.add('show')
-    main.style.opacity = 0.2
-    nav.style.opacity = 0.2
-    li.forEach(item => {
-      item.style.display = ''
-    })
+  if (mobileView.matches && (e.target.id == 'mobile' || e.target.className === 'sticks')) {
+    clicked()
   }
 }
 
