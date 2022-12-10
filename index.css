@@ -43,11 +43,25 @@ html {
   gap: 0.3rem;
   cursor: pointer;
 }
+.navbar .side-toggle .mobile:hover .sticks:nth-child(1) {
+  transform: translate(0px, 10px) rotate(45deg);
+}
+.navbar .side-toggle .mobile:hover .sticks:nth-child(3) {
+  transform: translate(0px, -10px) rotate(-45deg);
+}
+.navbar .side-toggle .mobile:hover .sticks:nth-child(2) {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+.navbar .side-toggle .mobile:hover .sticks {
+  background-color: #D6D8E1;
+}
 .navbar .side-toggle .sticks {
   background-color: #F7C46C;
   width: 35px;
   height: 5px;
   border-radius: 10px;
+  transition: transform 1s, opacity 500ms, background-color 1500ms ease-out;
 }
 .navbar h1 {
   color: #FFFFFF;
@@ -111,6 +125,20 @@ html {
 }
 .container .sidebar .sidebar-nav > li:nth-child(even) {
   background-color: #222230;
+}
+.container .sidebar .dark-mode-toggle {
+  width: 100%;
+  border-top: 2px solid #F7C46C;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 0;
+}
+.container .sidebar .dark-mode-toggle .fa {
+  color: #D6D8E1;
+  cursor: pointer;
 }
 .container .main {
   background-color: #191927;
@@ -377,9 +405,6 @@ html {
     flex-direction: column;
     gap: 0.2em;
     cursor: pointer;
-  }
-  .navbar .sticks:focus {
-    background-color: red;
   }
   .container .sidebar {
     position: fixed;
