@@ -252,7 +252,8 @@ html {
   padding: 0px 20px;
   border: 0px;
   border-radius: 10px;
-  display: none;
+  visibility: hidden;
+  transition: visibility 1s, opacity 1s ease-out;
 }
 .container .main .card .control .error-section button {
   background-color: inherit;
@@ -262,11 +263,11 @@ html {
 }
 .container .main .card .control .error-section p, .container .main .card .control .error-section .fa {
   color: #FFFFFF;
-  size: 1.5rem;
   pointer-events: none;
 }
 .container .main .card .control .error-section .fa {
   cursor: pointer;
+  font-size: 1.2rem;
 }
 .container .main .card .control .form {
   width: 90%;

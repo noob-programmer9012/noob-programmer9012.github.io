@@ -14,12 +14,14 @@ let formControl = document.querySelectorAll('.form-control')
 let closeError = document.querySelector('#closeError')
 
 closeError.addEventListener('mousedown', () => {
-  errorSection.style.display = 'none'
+  errorSection.style.visibility = 'hidden'
+  errorSection.style.opacity = '0'
 })
 
 formControl.forEach(item => {
   item.addEventListener('keydown', () => {
-    errorSection.style.display = 'none'
+    errorSection.style.visibility = 'hidden'
+    errorSection.style.opacity = '0'
   })
 })
 
@@ -163,7 +165,8 @@ function saveData (e) {
         )
         window.location.reload()
       } else {
-        errorSection.style.display = 'flex'
+        errorSection.style.visibility = 'visible'
+        errorSection.style.opacity = '1'
         error.innerText = 'Duplicate Entry!'
         trans.focus()
       }
@@ -172,16 +175,19 @@ function saveData (e) {
         trans.value.toUpperCase().trim() === e.target.value &&
         gst.value.toUpperCase().trim() === localStorage[e.target.value]
       ) {
-        errorSection.style.display = 'flex'
+        errorSection.style.visibility = 'visible'
+        errorSection.style.opacity = '1'
         error.innerText = 'No changes were made!'
       } else {
         tempTrans = e.target.value
         tempGst = localStorage[e.target.value]
         if (duplicateTrans(trans.value.toUpperCase().trim(), tempTrans)) {
-          errorSection.style.display = 'flex'
+          errorSection.style.visibility = 'visible'
+          errorSection.style.opacity = '1'
           error.innerText = 'Transporter already exist!'
         } else if (duplicateGst(gst.value.toUpperCase().trim())) {
-          errorSection.style.display = 'flex'
+          errorSection.style.visibility = 'visible'
+          errorSection.style.opacity = '1'
           error.innerText = 'Gst number assigned to another transporter!'
         } else {
           localStorage.removeItem(e.target.value)
@@ -194,7 +200,8 @@ function saveData (e) {
       }
     }
   } else {
-    errorSection.style.display = 'flex'
+    errorSection.style.visibility = 'visible'
+    errorSection.style.opacity = '1'
     error.innerText = 'All fields are mandatory'
   }
 }
