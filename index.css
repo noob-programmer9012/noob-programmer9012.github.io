@@ -253,17 +253,25 @@ html {
   border: 0px;
   border-radius: 10px;
   visibility: hidden;
-  transition: visibility 1s, opacity 1s ease-out;
+  transition: visibility 700ms, opacity 700ms, height 700ms, width 700ms ease-out;
 }
 .container .main .card .control .error-section button {
   background-color: inherit;
   border: none;
   cursor: pointer;
   padding: 0;
+  transition: opacity 750ms;
+}
+.container .main .card .control .error-section p {
+  opacity: 0;
+  visibility: hidden;
+  width: 100%;
+  flex: 1;
 }
 .container .main .card .control .error-section p, .container .main .card .control .error-section .fa {
   color: #FFFFFF;
   pointer-events: none;
+  transition: opacity 750ms, visibility 750ms;
 }
 .container .main .card .control .error-section .fa {
   cursor: pointer;

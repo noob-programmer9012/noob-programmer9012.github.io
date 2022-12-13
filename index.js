@@ -15,13 +15,25 @@ let closeError = document.querySelector('#closeError')
 
 closeError.addEventListener('mousedown', () => {
   errorSection.style.visibility = 'hidden'
+  errorSection.style.width = '0px'
+  errorSection.style.height = '0px'
   errorSection.style.opacity = '0'
+  error.style.width = '0px'
+  closeError.style.opacity = '0'
+  error.style.opacity = '0'
+  error.style.visibility = 'hidden'
 })
 
 formControl.forEach(item => {
   item.addEventListener('keydown', () => {
-    errorSection.style.visibility = 'hidden'
     errorSection.style.opacity = '0'
+    errorSection.style.width = '0px'
+    errorSection.style.height = '0px'
+    errorSection.style.visibility = 'hidden'
+    closeError.style.opacity = '0'
+    error.style.width = '0px'
+    error.style.opacity = '0'
+    error.style.visibility = 'hidden'
   })
 })
 
@@ -167,6 +179,12 @@ function saveData (e) {
       } else {
         errorSection.style.visibility = 'visible'
         errorSection.style.opacity = '1'
+        errorSection.style.width = '75%'
+        errorSection.style.height = '40px'
+        closeError.style.opacity = '1'
+        error.style.width = '100%'
+        error.style.opacity = '1'
+        error.style.visibility = 'visible'
         error.innerText = 'Duplicate Entry!'
         trans.focus()
       }
@@ -177,6 +195,12 @@ function saveData (e) {
       ) {
         errorSection.style.visibility = 'visible'
         errorSection.style.opacity = '1'
+        errorSection.style.width = '75%'
+        errorSection.style.height = '40px'
+        closeError.style.opacity = '1'
+        error.style.width = '100%'
+        error.style.visibility = 'visible'
+        error.style.opacity = '1'
         error.innerText = 'No changes were made!'
       } else {
         tempTrans = e.target.value
@@ -184,10 +208,22 @@ function saveData (e) {
         if (duplicateTrans(trans.value.toUpperCase().trim(), tempTrans)) {
           errorSection.style.visibility = 'visible'
           errorSection.style.opacity = '1'
+          errorSection.style.width = '75%'
+          errorSection.style.height = '40px'
+          closeError.style.opacity = '1'
+          error.style.width = '100%'
+          error.style.visibility = 'visible'
+          error.style.opacity = '1'
           error.innerText = 'Transporter already exist!'
         } else if (duplicateGst(gst.value.toUpperCase().trim())) {
           errorSection.style.visibility = 'visible'
           errorSection.style.opacity = '1'
+          errorSection.style.width = '75%'
+          errorSection.style.height = '40px'
+          closeError.style.opacity = '1'
+          error.style.width = '100%'
+          error.style.visibility = 'visible'
+          error.style.opacity = '1'
           error.innerText = 'Gst number assigned to another transporter!'
         } else {
           localStorage.removeItem(e.target.value)
@@ -202,6 +238,12 @@ function saveData (e) {
   } else {
     errorSection.style.visibility = 'visible'
     errorSection.style.opacity = '1'
+    errorSection.style.width = '75%'
+    errorSection.style.height = '40px'
+    closeError.style.opacity = '1'
+    error.style.width = '100%'
+    error.style.visibility = 'visible'
+    error.style.opacity = '1'
     error.innerText = 'All fields are mandatory'
   }
 }
